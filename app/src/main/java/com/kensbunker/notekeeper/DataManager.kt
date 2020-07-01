@@ -1,5 +1,7 @@
 package com.kensbunker.notekeeper
 
+import android.service.quicksettings.Tile
+
 object DataManager {
     val courses = HashMap<String, CourseInfo>()
     val notes = ArrayList<NoteInfo>()
@@ -7,6 +9,21 @@ object DataManager {
     init {
         initializeCourses()
         initializeNotes()
+    }
+
+    fun addNote(course: CourseInfo, noteTitle: String, noteText: String): Int {
+        val note = NoteInfo(course, noteTitle, noteText)
+        notes.add(note)
+        return notes.lastIndex
+    }
+
+    fun findNote(course: CourseInfo, noteTitle: String, noteText: String): NoteInfo? {
+        for (note in notes)
+            if (course == note.course &&
+                    noteTitle == note.title && noteText == note.text)
+                return note
+
+        return null
     }
 
     private fun initializeCourses() {
@@ -23,7 +40,7 @@ object DataManager {
         courses.set(course.courseId, course)
     }
 
-    private fun initializeNotes() {
+    fun initializeNotes() {
         var course = courses["android_intents"]!!
         var note = NoteInfo(course, "Dynamic intent resolution",
             "Wow, intents allow components to be resolved at runtime")
