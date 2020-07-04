@@ -57,9 +57,9 @@ class ItemsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             startActivity(Intent(this, NoteActivity::class.java))
         }
 
-        if (savedInstanceState != null)
-            viewModel.navDrawerDisplaySelection = savedInstanceState.getInt(viewModel.navDrawerDisplaySelectionName)
-
+        if (viewModel.isNewlyCreated && savedInstanceState != null)
+            viewModel.restoreState(savedInstanceState)
+        viewModel.isNewlyCreated = false
         handleDisplaySelection(viewModel.navDrawerDisplaySelection)
 
         var toggle = ActionBarDrawerToggle(
@@ -74,7 +74,7 @@ class ItemsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState?.putInt(viewModel.navDrawerDisplaySelectionName, viewModel.navDrawerDisplaySelection)
+        viewModel.saveState(outState)
     }
 
     private fun displayNotes() {
