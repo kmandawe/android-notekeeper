@@ -3,6 +3,10 @@ package com.kensbunker.notekeeper
 import androidx.lifecycle.ViewModel
 
 class ItemsActivityViewModel : ViewModel() {
+
+    var navDrawerDisplaySelectionName =
+        "com.kensbunker.notekeeper.ItemsActivityViewModel.navDrawerDisplaySelection"
+
     var navDrawerDisplaySelection = R.id.nav_notes
 
     private val maxRecentlyViewedNotes = 5
